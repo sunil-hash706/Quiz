@@ -11,16 +11,12 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // MongoDB Atlas connection
-const mongoURI = 'mongodb+srv://sunilkug20cse:okDVikoMRaItbKej@cluster0.hh4a6bj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'; // Replace with your MongoDB Atlas connection string
-
+const mongoURI = 'mongodb+srv://sunilkug20cse:okDVikoMRaItbKej@cluster0.hh4a6bj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
 mongoose.connect(mongoURI, { 
   useNewUrlParser: true, 
   useUnifiedTopology: true,
-  tlsInsecure: false, // Make sure this is set to false for production
-  tlsAllowInvalidCertificates: false, // Make sure this is set to false for production
-  tlsCAFile: process.env.CA_FILE_PATH, // Path to CA file if using custom CA
-  tlsVersion: 'TLSv1.2' // Ensure using a compatible TLS version
+  tlsAllowInvalidCertificates: true // Only for development; set to false for production
 });
 
 const db = mongoose.connection;
@@ -47,8 +43,7 @@ const Quiz = mongoose.model('Quiz', quizSchema);
 app.post('/api/quizzes', async (req, res) => {
   try {
     const { title, questions } = req.body;
-    if (title.length != 0 && questions.length != 0) {
-
+    if (title.length !== 0 && questions.length !== 0) {
       let quiz = await Quiz.findOne({ title });
 
       if (quiz) {
@@ -61,8 +56,7 @@ app.post('/api/quizzes', async (req, res) => {
 
       await quiz.save();
       res.status(201).json(quiz);
-    }
-    else {
+    } else {
       res.status(400).json({ error: 'Title or questions cannot be empty' });
     }
   } catch (err) {
@@ -77,11 +71,6 @@ app.get('/api/quizzes', async (req, res) => {
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
-});
-
-
-app.get('/', async (req, res) => {
-  res.json("Hello");
 });
 
 app.get('/api/quizzes/:id', async (req, res) => {
