@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 
 app.use(cors(
     {
-        origin: ["https://quiz-client-ten.vercel.app/"],
+        origin: ["https://quiz-client-ten.vercel.app"],
         methods: ["POST", "GET"],
         credentials: true
     }
