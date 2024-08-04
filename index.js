@@ -52,6 +52,7 @@ const Quiz = mongoose.model('Quiz', quizSchema);
 app.post('/api/quizzes', async (req, res) => {
   try {
     const { title, questions } = req.body;
+    console.log("Hiiiiiiii this came here ::: - ",title,questions);
     if (title.length !== 0 && questions.length !== 0) {
       let quiz = await Quiz.findOne({ title });
 
