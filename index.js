@@ -9,6 +9,11 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
+app.use(cors({
+  origin: 'https://quiz-client-ten.vercel.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 // MongoDB Atlas connection
 const mongoURI = 'mongodb+srv://sunilkug20cse:okDVikoMRaItbKej@cluster0.hh4a6bj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
