@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 
 app.use(cors(
     {
-        origin: ["https://quiz-client-ten.vercel.app"],
+        origin: ["quiz-client-ten.vercel.app"],
         methods: ["POST", "GET"],
         credentials: true
     }
@@ -76,6 +76,9 @@ app.get('/api/quizzes', async (req, res) => {
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
+});
+app.get('/', async (req, res) => {
+  console.log("Hello");
 });
 
 app.get('/api/quizzes/:id', async (req, res) => {
