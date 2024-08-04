@@ -7,11 +7,11 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors({
-    origin: ["https://quiz-client-ten.vercel.app"], // Include the protocol
-    methods: ["POST", "GET"],
-    credentials: true
-}));
+// app.use(cors({
+//     origin: ["https://quiz-client-ten.vercel.app"], // Include the protocol
+//     methods: ["POST", "GET"],
+//     credentials: true
+// }));
 
 app.use(express.json()); // Use built-in body parser
 app.use(express.urlencoded({ extended: true }));
