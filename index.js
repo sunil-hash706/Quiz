@@ -13,7 +13,15 @@ app.use(bodyParser.json());
 // MongoDB Atlas connection
 const mongoURI = 'mongodb+srv://sunilkug20cse:okDVikoMRaItbKej@cluster0.hh4a6bj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'; // Replace with your MongoDB Atlas connection string
 
-mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
+
+mongoose.connect(mongoURI, { 
+  useNewUrlParser: true, 
+  useUnifiedTopology: true,
+  tlsInsecure: false, // Make sure this is set to false for production
+  tlsAllowInvalidCertificates: false, // Make sure this is set to false for production
+  tlsCAFile: process.env.CA_FILE_PATH, // Path to CA file if using custom CA
+  tlsVersion: 'TLSv1.2' // Ensure using a compatible TLS version
+});
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
