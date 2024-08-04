@@ -20,55 +20,55 @@ app.options('*', cors());
 
 
 // MongoDB Atlas connection
-const mongoURI = 'mongodb+srv://sunilkug20cse:okDVikoMRaItbKej@cluster0.hh4a6bj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+// const mongoURI = 'mongodb+srv://sunilkug20cse:okDVikoMRaItbKej@cluster0.hh4a6bj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
-mongoose.connect(mongoURI, { 
-  useNewUrlParser: true, 
-  useUnifiedTopology: true,
-  tlsAllowInvalidCertificates: true // Only for development; set to false for production
-});
+// mongoose.connect(mongoURI, { 
+//   useNewUrlParser: true, 
+//   useUnifiedTopology: true,
+//   tlsAllowInvalidCertificates: true // Only for development; set to false for production
+// });
 
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', () => {
-  console.log('Connected to MongoDB Atlas');
-});
+// const db = mongoose.connection;
+// db.on('error', console.error.bind(console, 'connection error:'));
+// db.once('open', () => {
+//   console.log('Connected to MongoDB Atlas');
+// });
 
 // Quiz Schema
-const quizSchema = new mongoose.Schema({
-  title: { type: String, uppercase: true }, // Ensure title is uppercase
-  questions: [
-    {
-      questionText: String,
-      options: [String],
-      correctAnswer: String,
-    },
-  ],
-});
+// const quizSchema = new mongoose.Schema({
+//   title: { type: String, uppercase: true }, // Ensure title is uppercase
+//   questions: [
+//     {
+//       questionText: String,
+//       options: [String],
+//       correctAnswer: String,
+//     },
+//   ],
+// });
 
-const Quiz = mongoose.model('Quiz', quizSchema);
+// const Quiz = mongoose.model('Quiz', quizSchema);
 
 // Routes
 app.post('/api/quizzes', async (req, res) => {
   try {
     const { title, questions } = req.body;
     console.log("Hiiiiiiii this came here ::: - ",title,questions);
-    if (title.length !== 0 && questions.length !== 0) {
-      let quiz = await Quiz.findOne({ title });
+    // if (title.length !== 0 && questions.length !== 0) {
+    //   let quiz = await Quiz.findOne({ title });
 
-      if (quiz) {
-        // Quiz already exists, add new questions to it
-        quiz.questions = [...quiz.questions, ...questions];
-      } else {
-        // Create a new quiz
-        quiz = new Quiz({ title, questions });
-      }
+    //   if (quiz) {
+    //     // Quiz already exists, add new questions to it
+    //     quiz.questions = [...quiz.questions, ...questions];
+    //   } else {
+    //     // Create a new quiz
+    //     quiz = new Quiz({ title, questions });
+    //   }
 
-      await quiz.save();
-      res.status(201).json(quiz);
-    } else {
-      res.status(400).json({ error: 'Title or questions cannot be empty' });
-    }
+    //   await quiz.save();
+    //   res.status(201).json(quiz);
+    // } else {
+    //   res.status(400).json({ error: 'Title or questions cannot be empty' });
+    // }
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
@@ -76,8 +76,9 @@ app.post('/api/quizzes', async (req, res) => {
 
 app.get('/api/quizzes', async (req, res) => {
   try {
-    const quizzes = await Quiz.find({}, '_id title');
-    res.json(quizzes);
+    // const quizzes = await Quiz.find({}, '_id title');
+    // res.json(quizzes);
+    res.json("Hiii");
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
@@ -85,9 +86,10 @@ app.get('/api/quizzes', async (req, res) => {
 
 app.get('/api/quizzes/:id', async (req, res) => {
   try {
-    const quiz = await Quiz.findById(req.params.id);
-    if (!quiz) return res.status(404).json({ error: 'Quiz not found' });
-    res.json(quiz);
+    // const quiz = await Quiz.findById(req.params.id);
+    // if (!quiz) return res.status(404).json({ error: 'Quiz not found' });
+    // res.json(quiz);
+    res.json("Nooo");
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
