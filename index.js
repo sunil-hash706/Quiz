@@ -1,31 +1,19 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 const cors = require('cors');
-// require('dotenv').config(); // Load environment variables from .env file
 
 const app = express();
-const PORT =  5000;
+const PORT = process.env.PORT || 5000;
 
 // Middleware
-// app.use(cors({
-//     origin: ["https://quiz-client-ten.vercel.app"], // Include the protocol
-//     methods: ["POST", "GET"],
-//     credentials: true
-// }));
+app.use(cors());
+app.use(bodyParser.json());
 
-app.use(express.json()); // Use built-in body parser
-app.use(express.urlencoded({ extended: true }));
+// MongoDB Atlas connection
+const mongoURI = 'mongodb+srv://sunilkug20cse:okDVikoMRaItbKej@cluster0.hh4a6bj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'; // Replace with your MongoDB Atlas connection string
 
-// const mongoose = require('mongoose');
-// require('dotenv').config(); // Make sure to install dotenv with `npm install dotenv`
-
-const mongoURI =  "mongodb+srv://sunilkug20cse:okDVikoMRaItbKej@cluster0.hh4a6bj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-
-mongoose.connect(mongoURI, { 
-  useNewUrlParser: true, 
-  useUnifiedTopology: true,
-  tlsAllowInvalidCertificates: true // Only for development, not recommended for production
-});
+mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -65,7 +53,8 @@ app.post('/api/quizzes', async (req, res) => {
 
       await quiz.save();
       res.status(201).json(quiz);
-    } else {
+    }
+    else {
       res.status(400).json({ error: 'Title or questions cannot be empty' });
     }
   } catch (err) {
@@ -80,10 +69,6 @@ app.get('/api/quizzes', async (req, res) => {
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
-});
-
-app.get('/', async (req, res) => {
-  console.log("Hello");
 });
 
 app.get('/api/quizzes/:id', async (req, res) => {
