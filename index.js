@@ -16,10 +16,16 @@ const PORT =  5000;
 app.use(express.json()); // Use built-in body parser
 app.use(express.urlencoded({ extended: true }));
 
-// MongoDB Atlas connection
-const mongoURI = "mongodb+srv://sunilkug20cse:okDVikoMRaItbKej@cluster0.hh4a6bj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"; // Use environment variable for MongoDB URI
+// const mongoose = require('mongoose');
+// require('dotenv').config(); // Make sure to install dotenv with `npm install dotenv`
 
-mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
+const mongoURI =  "mongodb+srv://sunilkug20cse:okDVikoMRaItbKej@cluster0.hh4a6bj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
+mongoose.connect(mongoURI, { 
+  useNewUrlParser: true, 
+  useUnifiedTopology: true,
+  tlsAllowInvalidCertificates: true // Only for development, not recommended for production
+});
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
