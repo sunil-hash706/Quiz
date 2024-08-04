@@ -71,6 +71,11 @@ app.get('/api/quizzes', async (req, res) => {
   }
 });
 
+
+app.get('/', async (req, res) => {
+  res.json("Hello");
+});
+
 app.get('/api/quizzes/:id', async (req, res) => {
   try {
     const quiz = await Quiz.findById(req.params.id);
